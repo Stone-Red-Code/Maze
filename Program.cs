@@ -17,6 +17,7 @@ try
     {
         ConsoleExt.WriteLine("Console window size too small. Visualizing the maze may cause errors!", ConsoleColor.Red);
         ConsoleExt.Pause(true, "Press ENTER to continue or CTRL+C to exit the program.");
+        Console.Clear();
     }
 
     List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.Colored);
