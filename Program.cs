@@ -20,7 +20,7 @@ try
         Console.Clear();
     }
 
-    List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.None);
+    List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.Colored);
 
     printer.PrintColored(maze, solution, redrawAll: true);
 
