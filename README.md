@@ -1,2 +1,2 @@
 # Maze
- A small maze solving program
+> A small maze solving program
