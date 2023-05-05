@@ -20,10 +20,11 @@ try
         Console.Clear();
     }
 
-    List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.Colored);
+    List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.None);
 
     printer.PrintColored(maze, solution, redrawAll: true);
 
+    Console.SetCursorPosition(0, maze.GetLength(0));
     ConsoleExt.WriteLine("Done", ConsoleColor.Green);
 }
 catch (MazeException e)
