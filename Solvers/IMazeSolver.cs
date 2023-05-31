@@ -2,7 +2,7 @@
 
 namespace Maze.Solvers;
 
-internal interface IMazeSolver<T> where T : BaseMazeNode<T>, new()
+internal interface IMazeSolver
 {
-    public List<T> Solve(T node, T[,] maze, GraphicsMode graphicsMode = GraphicsMode.None);
+    public List<MazeNode> Solve(MazeNode node, MazeNode[,] maze, GraphicsMode graphicsMode = GraphicsMode.None);
 }

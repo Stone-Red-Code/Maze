@@ -4,18 +4,18 @@ namespace Maze.Utlis;
 
 internal class MazeParser
 {
-    public T[,] FromFile<T>(string filePath, out T startNode) where T : BaseMazeNode<T>, new()
+    public MazeNode[,] FromFile(string filePath, out MazeNode startNode)
     {
         return FromString(File.ReadAllText(filePath), out startNode);
     }
 
-    public T[,] FromString<T>(string input, out T startNode) where T : BaseMazeNode<T>, new()
+    public MazeNode[,] FromString(string input, out MazeNode startNode)
     {
         string[] lines = input.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
         startNode = null!;
-        T? goalNode = null;
-        T[,] nodes = new T[lines.Length, lines[0].Length];
+        MazeNode? goalNode = null;
+        MazeNode[,] nodes = new MazeNode[lines.Length, lines[0].Length];
 
         // Create nodes from input
         for (int y = 0; y < lines.Length; y++)
@@ -24,7 +24,7 @@ internal class MazeParser
             {
                 char c = lines[y][x];
 
-                T node = new T
+                MazeNode node = new MazeNode
                 {
                     Wall = c == '+',
                     Start = c == 'S',
@@ -69,7 +69,7 @@ internal class MazeParser
         {
             for (int x = 0; x < lines[0].Length; x++)
             {
-                T node = nodes[y, x];
+                MazeNode node = nodes[y, x];
 
                 if (x < lines[0].Length - 1)
                 {

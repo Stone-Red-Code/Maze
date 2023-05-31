@@ -6,13 +6,13 @@ namespace Maze.Utlis;
 
 internal class MazePrinter
 {
-    public void Print<T>(T[,] nodes, List<T>? solution = null, bool redrawAll = false) where T : BaseMazeNode<T>
+    public void Print(MazeNode[,] nodes, List<MazeNode>? solution = null, bool redrawAll = false)
     {
         for (int y = 0; y < nodes.GetLength(0); y++)
         {
             for (int x = 0; x < nodes.GetLength(1); x++)
             {
-                T node = nodes[y, x];
+                MazeNode node = nodes[y, x];
 
                 if (!node.Updated && !redrawAll)
                 {
@@ -51,7 +51,7 @@ internal class MazePrinter
         }
     }
 
-    public void PrintColored<T>(T[,] nodes, List<T>? solution = null, bool redrawAll = false) where T : BaseMazeNode<T>
+    public void PrintColored(MazeNode[,] nodes, List<MazeNode>? solution = null, bool redrawAll = false)
     {
         Console.BackgroundColor = ConsoleColor.Black;
         Console.CursorVisible = false;
@@ -60,7 +60,7 @@ internal class MazePrinter
         {
             for (int x = 0; x < nodes.GetLength(1); x++)
             {
-                T node = nodes[y, x];
+                MazeNode node = nodes[y, x];
 
                 if (!node.Updated && !redrawAll)
                 {

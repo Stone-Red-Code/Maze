@@ -7,11 +7,11 @@ using Stone_Red_Utilities.ConsoleExtentions;
 
 MazeParser parser = new MazeParser();
 MazePrinter printer = new MazePrinter();
-IMazeSolver<DfsNode> solver = new DepthFirstSearchMazeSolver();
+PathFinder pathFinder = new PathFinder(new DepthFirstSearchMazeSolver());
 
 try
 {
-    DfsNode[,] maze = parser.FromFile("input.txt", out DfsNode startNode);
+    MazeNode[,] maze = parser.FromFile("input.txt", out MazeNode startNode);
 
     if (Console.WindowHeight < maze.GetLength(0) || Console.WindowWidth < maze.GetLength(1))
     {
@@ -20,7 +20,34 @@ try
         Console.Clear();
     }
 
-    List<DfsNode> solution = solver.Solve(startNode, maze, GraphicsMode.Colored);
+    Console.WriteLine("Choose an algorithm:");
+    Type type = typeof(IMazeSolver);
+    IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+        .SelectMany(a => a.GetTypes())
+        .Where(t => type.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
+
+    int index = 0;
+
+    foreach (Type t in types)
+    {
+        Console.WriteLine($"[{index++}] {t.Name}");
+    }
+
+    int algorithmIndex = -1;
+
+    do
+    {
+        if (!int.TryParse(Console.ReadLine(), out algorithmIndex))
+        {
+            ConsoleExt.WriteLine("Invalid input. Please try again.", ConsoleColor.Red);
+            algorithmIndex = -1;
+        }
+    }
+    while (algorithmIndex < 0 || algorithmIndex >= types.Count());
+
+    pathFinder.MazeSolver = (IMazeSolver)Activator.CreateInstance(types.ElementAt(algorithmIndex))!;
+
+    List<MazeNode> solution = pathFinder.FindPath(startNode, maze, GraphicsMode.Colored);
 
     printer.PrintColored(maze, solution, redrawAll: true);
 

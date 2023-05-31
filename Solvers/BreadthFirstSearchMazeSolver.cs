@@ -3,17 +3,17 @@ using Maze.Utlis;
 
 namespace Maze.Solvers;
 
-internal class BreadthFirstSearchMazeSolver : IMazeSolver<BfsNode>
+internal class BreadthFirstSearchMazeSolver : IMazeSolver
 {
-    public List<BfsNode> Solve(BfsNode node, BfsNode[,] maze, GraphicsMode graphicsMode = GraphicsMode.None)
+    public List<MazeNode> Solve(MazeNode node, MazeNode[,] maze, GraphicsMode graphicsMode = GraphicsMode.None)
     {
         if (!node.Start)
         {
             throw new MazeException("Node is not a start node.");
         }
 
-        BfsNode currentNode;
-        Queue<BfsNode> queue = new Queue<BfsNode>();
+        MazeNode currentNode;
+        Queue<MazeNode> queue = new Queue<MazeNode>();
 
         queue.Enqueue(node);
 
@@ -28,8 +28,8 @@ internal class BreadthFirstSearchMazeSolver : IMazeSolver<BfsNode>
 
             if (currentNode.Goal)
             {
-                List<BfsNode> path = new List<BfsNode>();
-                BfsNode? pathNode = currentNode;
+                List<MazeNode> path = new List<MazeNode>();
+                MazeNode? pathNode = currentNode;
 
                 while (pathNode is not null && !pathNode.Start)
                 {
@@ -41,7 +41,7 @@ internal class BreadthFirstSearchMazeSolver : IMazeSolver<BfsNode>
                 return path;
             }
 
-            foreach (BfsNode child in currentNode.Neighbors.Where(n => !n.Visited && !n.Wall))
+            foreach (MazeNode child in currentNode.Neighbors.Where(n => !n.Visited && !n.Wall))
             {
                 child.Parent = currentNode;
                 child.Visited = true;
@@ -65,6 +65,6 @@ internal class BreadthFirstSearchMazeSolver : IMazeSolver<BfsNode>
             }
         }
 
-        return new List<BfsNode>();
+        return new List<MazeNode>();
     }
 }

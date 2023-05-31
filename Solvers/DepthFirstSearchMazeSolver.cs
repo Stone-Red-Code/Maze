@@ -3,18 +3,18 @@ using Maze.Utlis;
 
 namespace Maze.Solvers;
 
-internal class DepthFirstSearchMazeSolver : IMazeSolver<DfsNode>
+internal class DepthFirstSearchMazeSolver : IMazeSolver
 {
-    public List<DfsNode> Solve(DfsNode node, DfsNode[,] maze, GraphicsMode graphicsMode = GraphicsMode.None)
+    public List<MazeNode> Solve(MazeNode node, MazeNode[,] maze, GraphicsMode graphicsMode = GraphicsMode.None)
     {
         if (!node.Start)
         {
             throw new MazeException("Node is not a start node.");
         }
 
-        DfsNode? currentNode = node;
-        DfsNode? tempNode = null;
-        Stack<DfsNode> path = new Stack<DfsNode>();
+        MazeNode? currentNode = node;
+        MazeNode? tempNode = null;
+        Stack<MazeNode> path = new Stack<MazeNode>();
 
         while (!currentNode.Goal)
         {
@@ -25,7 +25,7 @@ internal class DepthFirstSearchMazeSolver : IMazeSolver<DfsNode>
                 throw new MazeException("Node has no neighbors.");
             }
 
-            if (path.TryPeek(out DfsNode? prevNode))
+            if (path.TryPeek(out MazeNode? prevNode))
             {
                 prevNode.Updated = true;
             }
@@ -39,7 +39,7 @@ internal class DepthFirstSearchMazeSolver : IMazeSolver<DfsNode>
                     throw new MazeException("No path found.");
                 }
 
-                if (path.TryPeek(out DfsNode? prevNode2))
+                if (path.TryPeek(out MazeNode? prevNode2))
                 {
                     prevNode2.Updated = true;
                 }
@@ -76,7 +76,7 @@ internal class DepthFirstSearchMazeSolver : IMazeSolver<DfsNode>
             }
         }
 
-        List<DfsNode> solution = path.ToList();
+        List<MazeNode> solution = path.ToList();
         solution.ForEach(n => n.Updated = true);
         return solution;
     }
